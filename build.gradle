@@ -20,7 +20,7 @@ dependencies {
 	compile ('rsuite-community:rsuite-message-props-lib:0.0.1') {
 		transitive=false
 	}
-	compile ('rsuite-community:rsuite-mo-utils-lib:1.0.0') {
+	compile ('rsuite-community:rsuite-mo-utils-lib:1.0.1') {
 		transitive=false
 	}
 	compile ('apache:commons-io:1.4') {

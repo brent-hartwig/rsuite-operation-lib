@@ -18,8 +18,7 @@ import com.rsicms.rsuite.utils.operation.result.OperationResult;
  * single operation. While the class does not support all of this now, it may be extended to do so.
  * It does support new and updated MOs, and offers a method to rollback those changes.
  */
-public class Transaction
-    extends Sandbox {
+public class Transaction extends Sandbox {
 
   /**
    * Updated MOs
@@ -61,12 +60,8 @@ public class Transaction
    * @param moId
    * @param assetName
    */
-  public void addAsset(
-      String moId,
-      String assetName) {
-    getAssetsLoaded().put(
-        moId,
-        assetName);
+  public void addAsset(String moId, String assetName) {
+    getAssetsLoaded().put(moId, assetName);
   }
 
   /**
@@ -75,12 +70,8 @@ public class Transaction
    * @param moId
    * @param assetName
    */
-  public void addUpdatedAsset(
-      String moId,
-      String assetName) {
-    getUpdatedAssets().put(
-        moId,
-        assetName);
+  public void addUpdatedAsset(String moId, String assetName) {
+    getUpdatedAssets().put(moId, assetName);
   }
 
   /**
@@ -127,12 +118,8 @@ public class Transaction
    * @param name
    * @param value
    */
-  public void setProperty(
-      String name,
-      String value) {
-    props.put(
-        name,
-        value);
+  public void setProperty(String name, String value) {
+    props.put(name, value);
   }
 
   /**
@@ -141,8 +128,7 @@ public class Transaction
    * @param name
    * @return property value or null if property was never set (or prop value is null)
    */
-  public String getProperty(
-      String name) {
+  public String getProperty(String name) {
     return props.get(name);
   }
 
@@ -159,28 +145,15 @@ public class Transaction
    * @param user
    * @param result
    */
-  public void rollback(
-      ExecutionContext context,
-      User user,
-      OperationResult result) {
+  public void rollback(ExecutionContext context, User user, OperationResult result) {
 
     this.rollbackRequested = true;
 
     // Rollback this transaction's new assets (destroy)
-    rollbackNewAssets(
-        context,
-        user,
-        result,
-        getAssetsLoaded(),
-        newAssetsRolledBack);
+    rollbackNewAssets(context, user, result, getAssetsLoaded(), newAssetsRolledBack);
 
     // Rollback this transaction's updated assets (rollback to previous version)
-    rollbackUpdatedAssets(
-        context,
-        user,
-        result,
-        getUpdatedAssets(),
-        updatedAssetsRolledBack);
+    rollbackUpdatedAssets(context, user, result, getUpdatedAssets(), updatedAssetsRolledBack);
 
   }
 
@@ -195,28 +168,20 @@ public class Transaction
    * @param processedAssets Map populated by this method, identifying the MOs it was able to
    *        destroy. Same key-value use as the above map.
    */
-  private static void rollbackNewAssets(
-      ExecutionContext context,
-      User user,
-      OperationResult result,
-      Map<String, String> assetsToProcess,
-      Map<String, String> processedAssets) {
+  private static void rollbackNewAssets(ExecutionContext context, User user, OperationResult result,
+      Map<String, String> assetsToProcess, Map<String, String> processedAssets) {
 
     String rollbackLabel = OperationMessageProperties.get("rollback.label");
 
     // Bail if there are no assets to process.
     if (assetsToProcess == null || assetsToProcess.size() == 0) {
-      result.addInfoMessage(
-          rollbackLabel,
+      result.addInfoMessage(rollbackLabel,
           OperationMessageProperties.get("rollback.info.no.new.assets"));
       return;
     }
 
-    result.addInfoMessage(
-        rollbackLabel,
-        OperationMessageProperties.get(
-            "rollback.info.processing.new.assets",
-            assetsToProcess.size()));
+    result.addInfoMessage(rollbackLabel, OperationMessageProperties
+        .get("rollback.info.processing.new.assets", assetsToProcess.size()));
 
     // Attempt to destroy each MO given to us.
     ObjectDestroyOptions destroyOptions = new ObjectDestroyOptions();
@@ -224,41 +189,28 @@ public class Transaction
       String id = entry.getKey();
       String label = entry.getValue();
       try {
-        result.addInfoMessage(
-            rollbackLabel,
-            OperationMessageProperties.get(
-                "rollback.info.processing.new.asset",
-                label,
-                id));
+        result.addInfoMessage(rollbackLabel,
+            OperationMessageProperties.get("rollback.info.processing.new.asset", label, id));
 
         // Make sure the current user has or can check out the MO.
-        MOUtils.checkout(
-            context,
-            user,
-            id);
+        MOUtils moUtils = new MOUtils();
+        moUtils.checkout(context, user, id);
 
         // Attempt destroy.
-        context.getManagedObjectService().destroy(
-            user,
-            id,
-            destroyOptions);
+        context.getManagedObjectService().destroy(user, id, destroyOptions);
 
         // Add to processed list
-        processedAssets.put(
-            id,
-            label);
+        processedAssets.put(id, label);
 
         // Increment associated counter
         result.incrementNewManagedObjectsRolledBackCount();
 
       } catch (RSuiteException e) {
-        result.addWarning(
-            rollbackLabel,
-            new RSuiteException(RSuiteException.ERROR_INTERNAL_ERROR, OperationMessageProperties.get(
-                    "rollback.warn.unable.to.process.new.asset",
-                    label,
-                    id,
-                    e.getMessage()), e));
+        result
+            .addWarning(rollbackLabel,
+                new RSuiteException(RSuiteException.ERROR_INTERNAL_ERROR, OperationMessageProperties
+                    .get("rollback.warn.unable.to.process.new.asset", label, id, e.getMessage()),
+                    e));
         continue;
       }
     }
@@ -275,85 +227,58 @@ public class Transaction
    * @param processedAssets Map populated by this method, identifying the MOs it was able to revert
    *        to the previous version. Same key-value use as the above map.
    */
-  private static void rollbackUpdatedAssets(
-      ExecutionContext context,
-      User user,
-      OperationResult result,
-      Map<String, String> assetsToProcess,
+  private static void rollbackUpdatedAssets(ExecutionContext context, User user,
+      OperationResult result, Map<String, String> assetsToProcess,
       Map<String, String> processedAssets) {
 
     String rollbackLabel = OperationMessageProperties.get("rollback.label");
 
     // Bail if there are no assets to process.
     if (assetsToProcess == null || assetsToProcess.size() == 0) {
-      result.addInfoMessage(
-          rollbackLabel,
+      result.addInfoMessage(rollbackLabel,
           OperationMessageProperties.get("rollback.info.no.updated.assets"));
       return;
     }
 
-    result.addInfoMessage(
-        rollbackLabel,
-        OperationMessageProperties.get(
-            "rollback.info.processing.updated.assets",
-            assetsToProcess.size()));
+    result.addInfoMessage(rollbackLabel, OperationMessageProperties
+        .get("rollback.info.processing.updated.assets", assetsToProcess.size()));
 
     // Attempt to revert each MO given to us.
     ObjectRollbackOptions rollbackOptions = new ObjectRollbackOptions();
+    MOUtils moUtils = new MOUtils();
     for (Map.Entry<String, String> entry : assetsToProcess.entrySet()) {
       String id = entry.getKey();
       String label = entry.getValue();
       try {
-        result.addInfoMessage(
-            rollbackLabel,
-            OperationMessageProperties.get(
-                "rollback.info.processing.updated.asset",
-                label,
-                id));
+        result.addInfoMessage(rollbackLabel,
+            OperationMessageProperties.get("rollback.info.processing.updated.asset", label, id));
 
         // Determine the version specifier for the previous version
-        VersionSpecifier versionSpecifier = MOUtils.getPreviousVersionSpecifier(
-            context,
-            user,
-            id);
+        VersionSpecifier versionSpecifier = moUtils.getPreviousVersionSpecifier(context, user, id);
         if (versionSpecifier == null) {
-          result.addWarning(
-              rollbackLabel,
-              new RSuiteException(RSuiteException.ERROR_INTERNAL_ERROR, OperationMessageProperties.get(
-                      "rollback.warn.updated.asset.has.one.version",
-                      label,
-                      id)));
+          result.addWarning(rollbackLabel,
+              new RSuiteException(RSuiteException.ERROR_INTERNAL_ERROR, OperationMessageProperties
+                  .get("rollback.warn.updated.asset.has.one.version", label, id)));
           continue;
         }
 
         // Make sure the current user has or can check out the MO.
-        MOUtils.checkout(
-            context,
-            user,
-            id);
+        moUtils.checkout(context, user, id);
 
         // Attempt rollback.
-        context.getManagedObjectService().rollback(
-            user,
-            versionSpecifier,
-            rollbackOptions);
+        context.getManagedObjectService().rollback(user, versionSpecifier, rollbackOptions);
 
         // Add to processed list
-        processedAssets.put(
-            id,
-            label);
+        processedAssets.put(id, label);
 
         // Increment associated counter
         result.incrementUpdatedManagedObjectsRolledBackCount();
 
       } catch (RSuiteException e) {
-        result.addWarning(
-            rollbackLabel,
-            new RSuiteException(RSuiteException.ERROR_INTERNAL_ERROR, OperationMessageProperties.get(
-                    "rollback.warn.unable.to.process.updated.asset",
-                    label,
-                    id,
-                    e.getMessage()), e));
+        result.addWarning(rollbackLabel,
+            new RSuiteException(RSuiteException.ERROR_INTERNAL_ERROR, OperationMessageProperties
+                .get("rollback.warn.unable.to.process.updated.asset", label, id, e.getMessage()),
+                e));
         continue;
       }
     }
