@@ -2,14 +2,12 @@ package com.rsicms.rsuite.utils.operation.options;
 
 import org.apache.commons.logging.Log;
 
-public class FileRequestOptions
-    extends OperationOptions {
+public class FileRequestOptions extends OperationOptions {
 
   private String suggestedFileName;
   private String tabName;
 
-  public FileRequestOptions(
-      Log log) {
+  public FileRequestOptions(Log log) {
     super(log);
   }
 
@@ -23,8 +21,7 @@ public class FileRequestOptions
   /**
    * @param suggestedFileName
    */
-  public void setSuggestedFileName(
-      String suggestedFileName) {
+  public void setSuggestedFileName(String suggestedFileName) {
     this.suggestedFileName = suggestedFileName;
   }
 
@@ -38,8 +35,7 @@ public class FileRequestOptions
   /**
    * @param tabName
    */
-  public void setTabName(
-      String tabName) {
+  public void setTabName(String tabName) {
     this.tabName = tabName;
   }
 

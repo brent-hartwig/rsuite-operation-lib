@@ -3,7 +3,7 @@ package com.rsicms.rsuite.utils.operation.status;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.reallysi.rsuite.api.RSuiteException;
 import com.rsicms.rsuite.utils.operation.OperationMessageProperties;
@@ -14,19 +14,17 @@ import com.rsicms.rsuite.utils.operation.OperationMessageProperties;
  */
 public enum OperationStatus {
   NONE(false, false, "none", "None"), QUEUED(true, true, "queued", "Queued"), IN_PROGRESS(true,
-      true, "in-progress", "In-Progress"), SUCCESSFUL(true, false, "successful", "Successful"), FAILED(
-      true, false, "failed", "Failed"), ABORTED(true, false, "aborted", "Aborted"), SKIPPED(false,
-      false, "skipped", "Skipped"), EXCLUDED(true, false, "excluded", "Excluded");
+      true, "in-progress",
+      "In-Progress"), SUCCESSFUL(true, false, "successful", "Successful"), FAILED(true, false,
+          "failed", "Failed"), ABORTED(true, false, "aborted", "Aborted"), SKIPPED(false, false,
+              "skipped", "Skipped"), EXCLUDED(true, false, "excluded", "Excluded");
 
   private boolean allowSet;
   private boolean outstanding;
   private String counterName;
   private String displayName;
 
-  private OperationStatus(
-      boolean allowSet,
-      boolean outstanding,
-      String counterName,
+  private OperationStatus(boolean allowSet, boolean outstanding, String counterName,
       String displayName) {
     this.allowSet = allowSet;
     this.outstanding = outstanding;
@@ -91,23 +89,17 @@ public enum OperationStatus {
    * @throws RSuiteException Thrown if the operation status name isn't valid and throwIfInvalid is
    *         true.
    */
-  public static OperationStatus get(
-      String name,
-      boolean throwIfInvalid)
-      throws RSuiteException {
+  public static OperationStatus get(String name, boolean throwIfInvalid) throws RSuiteException {
     if (StringUtils.isNotBlank(name)) {
       for (OperationStatus val : OperationStatus.values()) {
-        if (val.name().equalsIgnoreCase(
-            name)) {
+        if (val.name().equalsIgnoreCase(name)) {
           return val;
         }
       }
     }
     if (throwIfInvalid) {
       throw new RSuiteException(RSuiteException.ERROR_PARAM_INVALID,
-          OperationMessageProperties.get(
-              "operation.status.error.unknown.status",
-              name));
+          OperationMessageProperties.get("operation.status.error.unknown.status", name));
     }
     return null;
   }
@@ -121,16 +113,12 @@ public enum OperationStatus {
    * @throws RSuiteException Thrown if the operation status name isn't valid and throwIfInvalid is
    *         true.
    */
-  public static List<OperationStatus> getList(
-      List<String> names,
-      boolean throwIfInvalid)
+  public static List<OperationStatus> getList(List<String> names, boolean throwIfInvalid)
       throws RSuiteException {
     List<OperationStatus> statuses = new ArrayList<OperationStatus>();
     if (names != null) {
       for (String name : names) {
-        OperationStatus status = get(
-            name,
-            throwIfInvalid);
+        OperationStatus status = get(name, throwIfInvalid);
         if (status != null && !statuses.contains(status))
           statuses.add(status);
       }
@@ -144,8 +132,7 @@ public enum OperationStatus {
    * @param statuses
    * @return The names of the given operation status enum values.
    */
-  public static List<String> getNames(
-      List<OperationStatus> statuses) {
+  public static List<String> getNames(List<OperationStatus> statuses) {
     List<String> names = new ArrayList<String>();
     if (statuses != null) {
       for (OperationStatus status : statuses) {

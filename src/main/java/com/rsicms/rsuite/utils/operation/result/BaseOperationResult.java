@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 
 import com.reallysi.rsuite.api.ContentAssembly;
@@ -148,10 +148,7 @@ public class BaseOperationResult implements OperationResult {
    * @param log The log to write messages to, in addition to populating the message container. OK to
    *        send null.
    */
-  public BaseOperationResult(
-      String id,
-      String defaultLabel,
-      Log log) {
+  public BaseOperationResult(String id, String defaultLabel, Log log) {
     this.messageContainer = new ProcessMessageContainerImpl();
     this.defaultLabel = defaultLabel;
     this.counters = new HashMap<String, Integer>();
@@ -162,7 +159,9 @@ public class BaseOperationResult implements OperationResult {
     this.opLogger.setOpId(id);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getDefaultLabel()
    */
   @Override
@@ -170,16 +169,20 @@ public class BaseOperationResult implements OperationResult {
     return defaultLabel;
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#setLog(org.apache.commons.logging.Log)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#setLog(org.apache.commons.logging.Log)
    */
   @Override
-  public void setLog(
-      Log log) {
+  public void setLog(Log log) {
     this.opLogger.setLog(log);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getLog()
    */
   @Override
@@ -187,7 +190,9 @@ public class BaseOperationResult implements OperationResult {
     return this.opLogger.getLog();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getOperationId()
    */
   @Override
@@ -195,16 +200,19 @@ public class BaseOperationResult implements OperationResult {
     return opId;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#setOperationId(java.lang.String)
    */
   @Override
-  public void setOperationId(
-      String id) {
+  public void setOperationId(String id) {
     this.opId = id;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#markStartOfOperation()
    */
   @Override
@@ -212,16 +220,20 @@ public class BaseOperationResult implements OperationResult {
     setStartOfOperation(new Date());
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#setStartOfOperation(java.util.Date)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#setStartOfOperation(java.util.Date)
    */
   @Override
-  public void setStartOfOperation(
-      Date start) {
+  public void setStartOfOperation(Date start) {
     opStarted = start;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getStartOfOperation()
    */
   @Override
@@ -229,7 +241,9 @@ public class BaseOperationResult implements OperationResult {
     return opStarted;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#markEndOfOperation()
    */
   @Override
@@ -237,16 +251,19 @@ public class BaseOperationResult implements OperationResult {
     setEndOfOperation(new Date());
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#setEndOfOperation(java.util.Date)
    */
   @Override
-  public void setEndOfOperation(
-      Date start) {
+  public void setEndOfOperation(Date start) {
     opEnded = start;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getEndOfOperation()
    */
   @Override
@@ -254,12 +271,14 @@ public class BaseOperationResult implements OperationResult {
     return opEnded;
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getOperationDurationInMilliseconds()
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#getOperationDurationInMilliseconds()
    */
   @Override
-  public long getOperationDurationInMilliseconds()
-      throws RSuiteException {
+  public long getOperationDurationInMilliseconds() throws RSuiteException {
     if (opEnded == null || opStarted == null) {
       throw new RSuiteException(RSuiteException.ERROR_INTERNAL_ERROR,
           "error.unable.to.calculate.duration");
@@ -267,8 +286,11 @@ public class BaseOperationResult implements OperationResult {
     return opEnded.getTime() - opStarted.getTime();
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getOperationDurationInMillisecondsQuietly()
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#
+   * getOperationDurationInMillisecondsQuietly()
    */
   @Override
   public long getOperationDurationInMillisecondsQuietly() {
@@ -279,17 +301,21 @@ public class BaseOperationResult implements OperationResult {
     }
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getOperationDurationInSeconds()
    */
   @Override
-  public long getOperationDurationInSeconds()
-      throws RSuiteException {
+  public long getOperationDurationInSeconds() throws RSuiteException {
     return getOperationDurationInMilliseconds() / 1000;
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getOperationDurationInSecondsQuietly()
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#getOperationDurationInSecondsQuietly()
    */
   @Override
   public long getOperationDurationInSecondsQuietly() {
@@ -300,36 +326,40 @@ public class BaseOperationResult implements OperationResult {
     }
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#startTimer(java.lang.String)
    */
   @Override
-  public void startTimer(
-      String name) {
-    timers.put(
-        name,
-        new Date());
+  public void startTimer(String name) {
+    timers.put(name, new Date());
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getElapsedTimeInMilliseconds(java.lang.String)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#getElapsedTimeInMilliseconds(java.lang
+   * .String)
    */
   @Override
-  public long getElapsedTimeInMilliseconds(
-      String name) {
+  public long getElapsedTimeInMilliseconds(String name) {
     if (timers.containsKey(name)) {
-      return new Date().getTime() - timers.get(
-          name).getTime();
+      return new Date().getTime() - timers.get(name).getTime();
     }
     return -1;
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getElapsedTimeInSeconds(java.lang.String)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#getElapsedTimeInSeconds(java.lang.
+   * String)
    */
   @Override
-  public long getElapsedTimeInSeconds(
-      String name) {
+  public long getElapsedTimeInSeconds(String name) {
     long millis = getElapsedTimeInMilliseconds(name);
     if (millis > -1) {
       return millis / 1000;
@@ -337,19 +367,24 @@ public class BaseOperationResult implements OperationResult {
     return millis;
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addWorkflowJob(com.reallysi.rsuite.api.workflow.ProcessInstanceSummaryInfo)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#addWorkflowJob(com.reallysi.rsuite.api
+   * .workflow.ProcessInstanceSummaryInfo)
    */
   @Override
-  public void addWorkflowJob(
-      ProcessInstanceSummaryInfo job) {
+  public void addWorkflowJob(ProcessInstanceSummaryInfo job) {
     if (job != null) {
       workflowJobs.add(job);
       incrementWorkflowJobsCount();
     }
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getWorkflowJobs()
    */
   @Override
@@ -357,192 +392,177 @@ public class BaseOperationResult implements OperationResult {
     return workflowJobs;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addFailure(java.lang.Throwable)
    */
   @Override
-  public void addFailure(
-      Throwable t) {
-    addFailure(
-        defaultLabel,
-        t);
+  public void addFailure(Throwable t) {
+    addFailure(defaultLabel, t);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addFailure(java.lang.String, java.lang.Throwable)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addFailure(java.lang.String,
+   * java.lang.Throwable)
    */
   @Override
-  public void addFailure(
-      String label,
-      Throwable t) {
+  public void addFailure(String label, Throwable t) {
     if (canUnwrapThrowable(t)) {
       t = conditionallyUnwrapThrowable(t);
     }
     String message = t.getMessage();
-    opLogger.error(
-        message,
-        t);
+    opLogger.error(message, t);
     ProcessFailureMessage msg =
         new GenericProcessFailureMessage(Severity.FAIL.toString(), label, message, t);
     msg.setTimestamp();
     messageContainer.addFailureMessage(msg);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addWarning(java.lang.Throwable)
    */
   @Override
-  public void addWarning(
-      Throwable t) {
-    addWarning(
-        defaultLabel,
-        t);
+  public void addWarning(Throwable t) {
+    addWarning(defaultLabel, t);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addWarning(java.lang.String, java.lang.Throwable)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addWarning(java.lang.String,
+   * java.lang.Throwable)
    */
   @Override
-  public void addWarning(
-      String label,
-      Throwable t) {
+  public void addWarning(String label, Throwable t) {
     if (canUnwrapThrowable(t)) {
       t = conditionallyUnwrapThrowable(t);
     }
     String message = t.getMessage();
-    opLogger.warn(
-        message,
-        t);
+    opLogger.warn(message, t);
     ProcessWarningMessage msg =
         new GenericProcessWarningMessage(Severity.WARN.toString(), label, message, t);
     msg.setTimestamp();
     messageContainer.addWarningMessage(msg);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addInfoMessage(java.lang.String)
    */
   @Override
-  public void addInfoMessage(
-      String message) {
-    addInfoMessage(
-        defaultLabel,
-        message);
+  public void addInfoMessage(String message) {
+    addInfoMessage(defaultLabel, message);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addInfoMessage(java.lang.String, java.lang.String)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addInfoMessage(java.lang.String,
+   * java.lang.String)
    */
   @Override
-  public void addInfoMessage(
-      String label,
-      String message) {
-    addInfoMessage(
-        label,
-        message,
-        null);
+  public void addInfoMessage(String label, String message) {
+    addInfoMessage(label, message, null);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addInfoMessage(java.lang.String, java.lang.Throwable)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addInfoMessage(java.lang.String,
+   * java.lang.Throwable)
    */
   @Override
-  public void addInfoMessage(
-      String message,
-      Throwable t) {
-    addInfoMessage(
-        defaultLabel,
-        message,
-        t);
+  public void addInfoMessage(String message, Throwable t) {
+    addInfoMessage(defaultLabel, message, t);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addInfoMessage(java.lang.String, java.lang.String, java.lang.Throwable)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addInfoMessage(java.lang.String,
+   * java.lang.String, java.lang.Throwable)
    */
   @Override
-  public void addInfoMessage(
-      String label,
-      String message,
-      Throwable t) {
+  public void addInfoMessage(String label, String message, Throwable t) {
     if (canUnwrapThrowable(t)) {
       t = conditionallyUnwrapThrowable(t);
     }
-    opLogger.info(
-        message,
-        t);
+    opLogger.info(message, t);
     ProcessInfoMessage msg =
         new GenericProcessInfoMessage(Severity.INFO.toString(), label, message, t);
     msg.setTimestamp();
     messageContainer.addInfoMessage(msg);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addDebugMessage(java.lang.String)
    */
   @Override
-  public void addDebugMessage(
-      String message) {
-    addDebugMessage(
-        message,
-        defaultLabel);
+  public void addDebugMessage(String message) {
+    addDebugMessage(message, defaultLabel);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addDebugMessage(java.lang.String, java.lang.String)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addDebugMessage(java.lang.String,
+   * java.lang.String)
    */
   @Override
-  public void addDebugMessage(
-      String label,
-      String message) {
-    addDebugMessage(
-        label,
-        message,
-        null);
+  public void addDebugMessage(String label, String message) {
+    addDebugMessage(label, message, null);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addDebugMessage(java.lang.String, java.lang.Throwable)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addDebugMessage(java.lang.String,
+   * java.lang.Throwable)
    */
   @Override
-  public void addDebugMessage(
-      String message,
-      Throwable t) {
-    addDebugMessage(
-        defaultLabel,
-        message,
-        t);
+  public void addDebugMessage(String message, Throwable t) {
+    addDebugMessage(defaultLabel, message, t);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addDebugMessage(java.lang.String, java.lang.String, java.lang.Throwable)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addDebugMessage(java.lang.String,
+   * java.lang.String, java.lang.Throwable)
    */
   @Override
-  public void addDebugMessage(
-      String label,
-      String message,
-      Throwable t) {
+  public void addDebugMessage(String label, String message, Throwable t) {
     if (canUnwrapThrowable(t)) {
       t = conditionallyUnwrapThrowable(t);
     }
-    opLogger.debug(
-        message,
-        t);
+    opLogger.debug(message, t);
     ProcessDebugMessage msg =
         new GenericProcessDebugMessage(Severity.DEBUG.toString(), label, message, t);
     msg.setTimestamp();
     messageContainer.addDebugMessage(msg);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#hasMoreThanFailureCount(int)
    */
   @Override
-  public boolean hasMoreThanFailureCount(
-      int cnt) {
+  public boolean hasMoreThanFailureCount(int cnt) {
     return cnt > getFailureCount();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getFailureCount()
    */
   @Override
@@ -550,7 +570,9 @@ public class BaseOperationResult implements OperationResult {
     return getFailureMessages().size();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getWarningCount()
    */
   @Override
@@ -558,7 +580,9 @@ public class BaseOperationResult implements OperationResult {
     return getWarningMessages().size();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getInfoCount()
    */
   @Override
@@ -566,7 +590,9 @@ public class BaseOperationResult implements OperationResult {
     return getInfoMessages().size();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#isFailureAndWarningFree()
    */
   @Override
@@ -574,7 +600,9 @@ public class BaseOperationResult implements OperationResult {
     return (!hasFailures() && !hasWarnings());
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#hasFailures()
    */
   @Override
@@ -582,7 +610,9 @@ public class BaseOperationResult implements OperationResult {
     return messageContainer.hasFailures();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#hasWarnings()
    */
   @Override
@@ -590,7 +620,9 @@ public class BaseOperationResult implements OperationResult {
     return messageContainer.hasWarnings();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getFailureMessages()
    */
   @Override
@@ -598,7 +630,9 @@ public class BaseOperationResult implements OperationResult {
     return messageContainer.getFailureMessages();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getWarningMessages()
    */
   @Override
@@ -606,7 +640,9 @@ public class BaseOperationResult implements OperationResult {
     return messageContainer.getWarningMessages();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getInfoMessages()
    */
   @Override
@@ -614,7 +650,9 @@ public class BaseOperationResult implements OperationResult {
     return messageContainer.getInfoMessages();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getAllMessages()
    */
   @Override
@@ -622,51 +660,49 @@ public class BaseOperationResult implements OperationResult {
     return messageContainer.getAllMessages();
   }
 
-  private int getOrInitializeCount(
-      String name) {
+  private int getOrInitializeCount(String name) {
     if (!counters.containsKey(name)) {
-      counters.put(
-          name,
-          0);
+      counters.put(name, 0);
     }
     return counters.get(name);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getCount(java.lang.String)
    */
   @Override
-  public int getCount(
-      String name) {
+  public int getCount(String name) {
     return getOrInitializeCount(name);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#incrementCount(java.lang.String)
    */
   @Override
-  public void incrementCount(
-      String name) {
-    incrementCount(
-        name,
-        1);
+  public void incrementCount(String name) {
+    incrementCount(name, 1);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#incrementCount(java.lang.String, int)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#incrementCount(java.lang.String,
+   * int)
    */
   @Override
-  public void incrementCount(
-      String name,
-      int cnt) {
+  public void incrementCount(String name, int cnt) {
     if (StringUtils.isNotBlank(name)) {
-      counters.put(
-          name,
-          getOrInitializeCount(name) + cnt);
+      counters.put(name, getOrInitializeCount(name) + cnt);
     }
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getCounterNames()
    */
   @Override
@@ -678,15 +714,20 @@ public class BaseOperationResult implements OperationResult {
     return names;
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#incrementManagedObjectCreatedCount()
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#incrementManagedObjectCreatedCount()
    */
   @Override
   public void incrementManagedObjectCreatedCount() {
     incrementCount(COUNTER_NAME_MOS_CREATED);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getManagedObjectCreatedCount()
    */
   @Override
@@ -694,15 +735,20 @@ public class BaseOperationResult implements OperationResult {
     return getCount(COUNTER_NAME_MOS_CREATED);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#incrementManagedObjectUpdatedCount()
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#incrementManagedObjectUpdatedCount()
    */
   @Override
   public void incrementManagedObjectUpdatedCount() {
     incrementCount(COUNTER_NAME_MOS_UPDATED);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getManagedObjectUpdatedCount()
    */
   @Override
@@ -710,39 +756,53 @@ public class BaseOperationResult implements OperationResult {
     return getCount(COUNTER_NAME_MOS_UPDATED);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#incrementNewManagedObjectsRolledBackCount()
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#
+   * incrementNewManagedObjectsRolledBackCount()
    */
   @Override
   public void incrementNewManagedObjectsRolledBackCount() {
     incrementCount(COUNTER_NAME_NEW_MOS_ROLLED_BACK);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getNewManagedObjectsRolledBackCount()
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#getNewManagedObjectsRolledBackCount()
    */
   @Override
   public int getNewManagedObjectsRolledBackCount() {
     return getCount(COUNTER_NAME_NEW_MOS_ROLLED_BACK);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#incrementUpdatedManagedObjectsRolledBackCount()
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#
+   * incrementUpdatedManagedObjectsRolledBackCount()
    */
   @Override
   public void incrementUpdatedManagedObjectsRolledBackCount() {
     incrementCount(COUNTER_NAME_UPDATED_MOS_ROLLED_BACK);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getUpdatedManagedObjectsRolledBackCount()
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#
+   * getUpdatedManagedObjectsRolledBackCount()
    */
   @Override
   public int getUpdatedManagedObjectsRolledBackCount() {
     return getCount(COUNTER_NAME_UPDATED_MOS_ROLLED_BACK);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#incrementWorkflowJobsCount()
    */
   @Override
@@ -750,7 +810,9 @@ public class BaseOperationResult implements OperationResult {
     incrementCount(COUNTER_NAME_WORKFLOW_JOBS);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getWorkflowJobsCount()
    */
   @Override
@@ -758,15 +820,20 @@ public class BaseOperationResult implements OperationResult {
     return getCount(COUNTER_NAME_WORKFLOW_JOBS);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#incrementSkippedManagedObjectCount()
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#incrementSkippedManagedObjectCount()
    */
   @Override
   public void incrementSkippedManagedObjectCount() {
     incrementCount(COUNTER_NAME_MOS_SKIPPED);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getSkippedManagedObjectCount()
    */
   @Override
@@ -774,7 +841,9 @@ public class BaseOperationResult implements OperationResult {
     return getCount(COUNTER_NAME_MOS_SKIPPED);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#startTransaction()
    */
   @Override
@@ -784,7 +853,9 @@ public class BaseOperationResult implements OperationResult {
     return transactions.size() - 1;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getCurrentTransaction()
    */
   @Override
@@ -795,46 +866,46 @@ public class BaseOperationResult implements OperationResult {
     return transactions.get(transactions.size() - 1);
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addNewAsset(java.lang.String, java.lang.String)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addNewAsset(java.lang.String,
+   * java.lang.String)
    */
   @Override
-  public void addNewAsset(
-      String moId,
-      String assetName) {
-    getCurrentTransaction().addAsset(
-        moId);
+  public void addNewAsset(String moId, String assetName) {
+    getCurrentTransaction().addAsset(moId);
     incrementManagedObjectCreatedCount();
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addUpdatedAsset(java.lang.String, java.lang.String)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addUpdatedAsset(java.lang.String,
+   * java.lang.String)
    */
   @Override
-  public void addUpdatedAsset(
-      String moId,
-      String assetName) {
-    getCurrentTransaction().addUpdatedAsset(
-        moId,
-        assetName);
+  public void addUpdatedAsset(String moId, String assetName) {
+    getCurrentTransaction().addUpdatedAsset(moId, assetName);
     incrementManagedObjectUpdatedCount();
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#rollbackCurrentTransaction(com.reallysi.rsuite.api.extensions.ExecutionContext, com.reallysi.rsuite.api.User, com.rsicms.rsuite.utils.operation.result.OperationResult)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#rollbackCurrentTransaction(com.
+   * reallysi.rsuite.api.extensions.ExecutionContext, com.reallysi.rsuite.api.User,
+   * com.rsicms.rsuite.utils.operation.result.OperationResult)
    */
   @Override
-  public void rollbackCurrentTransaction(
-      ExecutionContext context,
-      User user,
+  public void rollbackCurrentTransaction(ExecutionContext context, User user,
       OperationResult result) {
-    getCurrentTransaction().rollback(
-        context,
-        user,
-        result);
+    getCurrentTransaction().rollback(context, user, result);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getTransactions()
    */
   @Override
@@ -842,7 +913,9 @@ public class BaseOperationResult implements OperationResult {
     return transactions;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getDestroyedContentAssemblies()
    */
   @Override
@@ -850,16 +923,21 @@ public class BaseOperationResult implements OperationResult {
     return destroyedContentAssemblyList;
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#setDestroyedContentAssemblies(java.util.List)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#setDestroyedContentAssemblies(java.
+   * util.List)
    */
   @Override
-  public void setDestroyedContentAssemblies(
-      List<ContentAssembly> destroyedContentAssemblyList) {
+  public void setDestroyedContentAssemblies(List<ContentAssembly> destroyedContentAssemblyList) {
     this.destroyedContentAssemblyList = destroyedContentAssemblyList;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getDestroyedManagedObjects()
    */
   @Override
@@ -867,27 +945,33 @@ public class BaseOperationResult implements OperationResult {
     return destroyedManagedObjectList;
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#setDestroyedManagedObjects(java.util.List)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#setDestroyedManagedObjects(java.util.
+   * List)
    */
   @Override
-  public void setDestroyedManagedObjects(
-      List<ManagedObject> destroyedManagedObjectList) {
+  public void setDestroyedManagedObjects(List<ManagedObject> destroyedManagedObjectList) {
     this.destroyedManagedObjectList = destroyedManagedObjectList;
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#setPayload(java.lang.String, java.lang.String)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#setPayload(java.lang.String,
+   * java.lang.String)
    */
   @Override
-  public void setPayload(
-      String payload,
-      String contentType) {
+  public void setPayload(String payload, String contentType) {
     this.payload = payload;
     this.payloadContentType = contentType;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getPayload()
    */
   @Override
@@ -895,7 +979,9 @@ public class BaseOperationResult implements OperationResult {
     return payload;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#hasPayload()
    */
   @Override
@@ -903,7 +989,9 @@ public class BaseOperationResult implements OperationResult {
     return StringUtils.isNotBlank(payload);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getPayloadContentType()
    */
   @Override
@@ -911,37 +999,40 @@ public class BaseOperationResult implements OperationResult {
     return payloadContentType;
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#addSubResult(com.rsicms.rsuite.utils.operation.result.BaseOperationResult)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#addSubResult(com.rsicms.rsuite.utils.
+   * operation.result.BaseOperationResult)
    */
   @Override
-  public void addSubResult(
-      BaseOperationResult subResult) {
+  public void addSubResult(BaseOperationResult subResult) {
     if (subResult != null) {
       // At present we're only bringing over the messages.
       messageContainer.addAll(subResult.messageContainer);
     }
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getExecutiveSummary()
    */
   @Override
   public String getExecutiveSummary() {
     if (hasFailures()) {
-      return new StringBuilder("Error! (").append(
-          getFailureCount()).append(
-          ")").toString();
+      return new StringBuilder("Error! (").append(getFailureCount()).append(")").toString();
     } else if (hasWarnings()) {
-      return new StringBuilder("Warning (").append(
-          getWarningCount()).append(
-          ")").toString();
+      return new StringBuilder("Warning (").append(getWarningCount()).append(")").toString();
     } else {
       return "Successful";
     }
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.rsicms.rsuite.utils.operation.result.OperationResult#getHtmlFormattedMessages()
    */
   @Override
@@ -958,21 +1049,26 @@ public class BaseOperationResult implements OperationResult {
     return stringWriter.toString();
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#canUnwrapThrowable(java.lang.Throwable)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#canUnwrapThrowable(java.lang.
+   * Throwable)
    */
   @Override
-  public boolean canUnwrapThrowable(
-      Throwable t) {
+  public boolean canUnwrapThrowable(Throwable t) {
     return t instanceof InvocationTargetException;
   }
 
-  /* (non-Javadoc)
-   * @see com.rsicms.rsuite.utils.operation.result.OperationResult#conditionallyUnwrapThrowable(java.lang.Throwable)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.rsicms.rsuite.utils.operation.result.OperationResult#conditionallyUnwrapThrowable(java.lang
+   * .Throwable)
    */
   @Override
-  public Throwable conditionallyUnwrapThrowable(
-      Throwable t) {
+  public Throwable conditionallyUnwrapThrowable(Throwable t) {
     while (t instanceof InvocationTargetException) {
       t = ((InvocationTargetException) t).getTargetException();
     }
@@ -988,25 +1084,14 @@ public class BaseOperationResult implements OperationResult {
    * @param wrapperCode
    * @param wrapperMessageKey
    * @param wrapperMessageArgs
-   * @return An RSuiteException
-  public RSuiteException conditionallyWrapThrowable(
-      Throwable t,
-      int wrapperCode,
-      String wrapperMessageKey,
-      Object... wrapperMessageArgs) {
-
-    t = conditionallyUnwrapThrowable(t);
-
-    RSuiteException re;
-    if (t instanceof RSuiteException) {
-      re = (RSuiteException) t;
-    } else {
-      re = new RSuiteException(wrapperCode, LocalMessageProperties.get(
-          wrapperMessageKey,
-          wrapperMessageArgs), t);
-    }
-    return re;
-  }
+   * @return An RSuiteException public RSuiteException conditionallyWrapThrowable( Throwable t, int
+   *         wrapperCode, String wrapperMessageKey, Object... wrapperMessageArgs) {
+   * 
+   *         t = conditionallyUnwrapThrowable(t);
+   * 
+   *         RSuiteException re; if (t instanceof RSuiteException) { re = (RSuiteException) t; }
+   *         else { re = new RSuiteException(wrapperCode, LocalMessageProperties.get(
+   *         wrapperMessageKey, wrapperMessageArgs), t); } return re; }
    */
 
 }

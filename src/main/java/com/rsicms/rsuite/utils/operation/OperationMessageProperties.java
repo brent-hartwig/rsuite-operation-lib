@@ -9,8 +9,8 @@ import com.rsicms.rsuite.utils.messsageProps.LibraryMessageProperties;
  */
 public class OperationMessageProperties extends LibraryMessageProperties {
 
-	public OperationMessageProperties() throws IOException {
-		super(OperationMessageProperties.class);
-	}
+  public OperationMessageProperties() throws IOException {
+    super(OperationMessageProperties.class);
+  }
 
 }

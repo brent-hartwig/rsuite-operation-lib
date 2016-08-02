@@ -7,8 +7,7 @@ import java.util.zip.ZipEntry;
 
 import org.apache.commons.logging.Log;
 
-public class ZipOperationResult
-    extends BaseOperationResult {
+public class ZipOperationResult extends BaseOperationResult {
 
   private final static String COUNTER_NAME_MOS_CREATED = "mosCreated";
 
@@ -18,10 +17,7 @@ public class ZipOperationResult
 
   private List<String> zipFileManifest = new ArrayList<String>();
 
-  public ZipOperationResult(
-      String operationId,
-      String defaultLabel,
-      Log log) {
+  public ZipOperationResult(String operationId, String defaultLabel, Log log) {
     super(operationId, defaultLabel, log);
   }
 
@@ -77,8 +73,7 @@ public class ZipOperationResult
   /**
    * @param zipFile the zipFile to set
    */
-  public void setZipFile(
-      File zipFile) {
+  public void setZipFile(File zipFile) {
     this.zipFile = zipFile;
   }
 
@@ -94,8 +89,7 @@ public class ZipOperationResult
    * 
    * @param ze
    */
-  public void addToZipFileManifest(
-      ZipEntry ze) {
+  public void addToZipFileManifest(ZipEntry ze) {
     zipFileManifest.add(ze.getName());
   }
 
